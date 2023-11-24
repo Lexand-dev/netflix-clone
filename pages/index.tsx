@@ -6,6 +6,7 @@ import { Inter } from 'next/font/google';
 import Billboard from '@/components/Billboard';
 import MovieList from '@/components/MovieList';
 import Navbar from '@/components/Navbar';
+import useFavorites from '@/hooks/useFavorites';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -28,6 +29,8 @@ export async function getServerSideProps(context: NextPageContext) {
 
 export default function Home() {
   const { movies } = useMoviesList();
+  const { data: favorites } = useFavorites();
+  console.log(favorites);
 
   return (
     <>
@@ -35,6 +38,7 @@ export default function Home() {
       <Billboard />
       <div className='pb-40'>
         <MovieList title='Trending Now' data={movies}/>
+        <MovieList title='My List' data={favorites}/>
       </div>
     </>
   )
