@@ -3,6 +3,7 @@ import { PlayIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
 
+import useInfoModal from '@/hooks/useInfoModal';
 import { MovieInterface } from '@/types';
 import FavoriteButton from './FavoriteButton';
 
@@ -12,7 +13,16 @@ interface MovieCardProps {
 
 const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
   const router = useRouter();
-  const redirectToWatch = useCallback(() => router.push(`/watch/${data.id}`), [router, data.id]);
+  const { openModal } = useInfoModal();
+
+  const redirectToWatch = useCallback(() => 
+    router.push(`/watch/${data.id}`), 
+    [router, data.id]);
+
+  const handleOpenModal = useCallback(() => {
+    openModal(data?.id);
+  }
+  , [openModal, data?.id]);
 
   return (
     <div className="group bg-zinc-900 col-span relative h-[12vw]">
@@ -68,11 +78,38 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
           rounded-b-md
           ">
           <div className="flex flex-row items-center gap-3">
-            <div onClick={redirectToWatch} className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300">
+            <div 
+              onClick={redirectToWatch} 
+              className="
+                cursor-pointer 
+                w-6 h-6 
+                lg:w-10 lg:h-10 
+                bg-white 
+                rounded-full 
+                flex 
+                justify-center 
+                items-center 
+                transition 
+                hover:bg-neutral-300">
               <PlayIcon className="text-black w-4 lg:w-6" />
             </div>
             <FavoriteButton movieId={data?.id} />
-            <div onClick={() => {}} className="cursor-pointer ml-auto group/item w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex justify-center items-center transition hover:border-neutral-300">
+            <div 
+              onClick={handleOpenModal} 
+              className="
+                cursor-pointer 
+                ml-auto 
+                group/item 
+                w-6 h-6 
+                lg:w-10 lg:h-10 
+                border-white 
+                border-2 
+                rounded-full 
+                flex 
+                justify-center 
+                items-center 
+                transition 
+                hover:border-neutral-300">
               <ChevronDownIcon className="text-white group-hover/item:text-neutral-300 w-4 lg:w-6" />
             </div>
           </div>

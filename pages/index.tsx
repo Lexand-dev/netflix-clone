@@ -5,8 +5,11 @@ import { getSession } from 'next-auth/react';
 import { Inter } from 'next/font/google';
 
 import Billboard from '@/components/Billboard';
+import InfoModal from '@/components/InfoModal';
 import MovieList from '@/components/MovieList';
 import Navbar from '@/components/Navbar';
+
+import useInfoModal from '@/hooks/useInfoModal';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,9 +33,11 @@ export async function getServerSideProps(context: NextPageContext) {
 export default function Home() {
   const { data: movies } = useMoviesList();
   const { data: favorites } = useFavorites();
+  const { isOpen, closeModal } = useInfoModal();
 
   return (
     <>
+      <InfoModal onClose={closeModal} visible={isOpen} />
       <Navbar />
       <Billboard />
       <div className='pb-40'>
