@@ -1,5 +1,5 @@
 import fetcher from '@/lib/fetcher';
-import Swr from 'swr';
+import useSwr from 'swr';
 
 const useFavorites = () => {
   const { 
@@ -7,7 +7,7 @@ const useFavorites = () => {
     error,
     isLoading, 
     mutate
-  } = Swr('/api/favorites', fetcher, {
+  } = useSwr('/api/favorites', fetcher, {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
     revalidateIfStale: false,

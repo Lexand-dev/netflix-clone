@@ -3,7 +3,6 @@ import { PlayIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
 
-/* import FavoriteButton from '@/components/FavoriteButton'; */
 import { MovieInterface } from '@/types';
 import FavoriteButton from './FavoriteButton';
 
@@ -13,8 +12,6 @@ interface MovieCardProps {
 
 const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
   const router = useRouter();
-
-
   const redirectToWatch = useCallback(() => router.push(`/watch/${data.id}`), [router, data.id]);
 
   return (
