@@ -16,6 +16,7 @@ export const authOptions: AuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
     }),
+
     Credentials({
       id: 'credentials',
       name: 'Credentials',
@@ -26,7 +27,7 @@ export const authOptions: AuthOptions = {
         },
         password: {
           label: 'Password',
-          type: 'passord'
+          type: 'password'
         }
       },
       async authorize(credentials) {
