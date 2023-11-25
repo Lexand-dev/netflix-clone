@@ -1,12 +1,13 @@
 import prismadb from '@/lib/prismadb';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { compare } from 'bcrypt';
-import NextAuth, { AuthOptions } from 'next-auth';
+import type { NextAuthOptions } from 'next-auth';
+import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 
-export const authOptions: AuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID || '',
@@ -63,12 +64,13 @@ export const authOptions: AuthOptions = {
     secret: process.env.NEXTAUTH_JWT_SECRET,
   },
   secret: process.env.NEXTAUTH_SECRET,
-  /* callbacks: {
-    async session(session, user) {
-      session.user.id = user.id;
-      return session;
-    }
-  } */
+  callbacks: {
+    async redirect(params: { url: string; baseUrl: string }) {
+      const { url, baseUrl } = params;
+      console.log('redirect', url, baseUrl);
+      return url.startsWith(baseUrl) ? url : baseUrl;
+    },
+  },
 };
 
 export default NextAuth(authOptions);
